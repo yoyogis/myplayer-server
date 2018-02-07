@@ -9,5 +9,7 @@ module.exports = appInfo => {
   // add your config here
   config.middleware = [];
 
+  config.meidaFolder = "/Users/yuanyu/Music/xiqu"
+
   return config;
 };
