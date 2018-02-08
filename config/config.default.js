@@ -10,6 +10,7 @@ module.exports = appInfo => {
   config.middleware = [];
 
   config.meidaFolder = "/Users/yuanyu/Music/xiqu"
+  config.supportedFileTypes = [".mp3"]
 
   return config;
 };
