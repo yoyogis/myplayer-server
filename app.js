@@ -3,15 +3,11 @@ const fs = require('fs');
 module.exports=(app)=>{
     
     app.beforeStart(()=>{
-        rescan();
+        const rescan = app.createScanFunction(app.config.meidaFolder, app.config.supportedFileTypes);
 
-        fs.watch(app.config.meidaFolder, {recursive:true}, ()=>{
-            rescan();
+        fs.watch(app.config.meidaFolder, {recursive:true}, async ()=>{
+            app.musics = await rescan();
         })
-
-        async function rescan(){
-            return app.musics = await app.scanFiles(app.config.meidaFolder);
-        }
 
         app.getMusics = async ()=>{
             if(app.musics){

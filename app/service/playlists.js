@@ -13,13 +13,22 @@ const readFile = util.promisify(fs.readFile);
 
 class Playlists extends Service {
     async list() {
-        return (await this.app.getMusics()).map((item)=>{
+        return (await this.app.getMusics()).list.map((item)=>{
             return {
                 md5: item.md5,
                 fileName: item.fileName,
                 fileType:item.fileType
             }
         });
+    }
+
+    async getFile(md5) {
+        let item = (await this.app.getMusics()).map[md5];
+        return {
+            md5: item.md5,
+            fileName: item.fileName,
+            fileType:item.fileType
+        };
     }
 }
 
