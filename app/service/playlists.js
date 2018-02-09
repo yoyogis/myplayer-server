@@ -23,12 +23,7 @@ class Playlists extends Service {
     }
 
     async getFile(md5) {
-        let item = (await this.app.getMusics()).map[md5];
-        return {
-            md5: item.md5,
-            fileName: item.fileName,
-            fileType:item.fileType
-        };
+        return (await this.app.getMusics()).map[md5];
     }
 }
 
