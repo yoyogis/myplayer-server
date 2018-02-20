@@ -1,5 +1,7 @@
 'use strict';
 
+const os = require("os");
+
 module.exports = appInfo => {
   const config = exports = {};
 
@@ -9,7 +11,7 @@ module.exports = appInfo => {
   // add your config here
   config.middleware = [];
 
-  config.meidaFolder = "/Users/yuanyu/Music/xiqu"
+  config.meidaFolder = os.homedir()+"/yyplayerdata"
   config.supportedFileTypes = [".mp3"]
 
   return config;
