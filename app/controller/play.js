@@ -16,8 +16,11 @@ class PlayController extends Controller {
     this.ctx.type = extname(file.path);
     let fileStat = await stat(file.path);
     let size = fileStat.size;
-    this.ctx.set('content-length', size);
+    this.ctx.set('Content-length', size);
     this.ctx.set('Content-Range',`bytes */${size}`);
+    this.ctx.set('Connection','keep-alive');
+    console.log(file)
+    this.ctx.set('Content-Disposition', 'inline; filename='+encodeURIComponent(file.fileName) );
     this.ctx.body = rstream;
   }
 }
