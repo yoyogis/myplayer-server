@@ -11,8 +11,10 @@ module.exports=(app)=>{
 
         app.getMusics = async ()=>{
             if(app.musics){
+                console.log("app");
                 return app.musics;
             }else{
+                console.log("rescan");
                 return await rescan();
             }
         }

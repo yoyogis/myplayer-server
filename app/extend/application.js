@@ -12,6 +12,9 @@ const readdir = util.promisify(fs.readdir);
 const stat = util.promisify(fs.stat);
 const readFile = util.promisify(fs.readFile);
 
+
+const imageType = new Set([".jpg",".png"]);
+
 module.exports = {
 
     createScanFunction(dir, types){
@@ -49,7 +52,9 @@ module.exports = {
                             path: filePath,
                             md5: md5,
                             fileName: file,
-                            fileType:fileType
+                            fileType:fileType,
+                            dir:absolutPath,
+                            images:await getRelatedImages(filePath)
                         };
                         result.push(fileInfo);
                         resultMap[md5] = fileInfo;
@@ -90,6 +95,18 @@ module.exports = {
             } else {
                 return true;
             }
+        }
+
+        async function getRelatedImages(filePath){
+            let dir = path.dirname(filePath);
+            const name = path.basename(filePath);
+            const files = await readdir(dir);
+            let res = files.filter(item=>{
+                let rightExt = imageType.has(path.extname(item));
+                let sameName = item.trim().substring(0,6)==name.trim().substring(0,6);
+                return sameName&&rightExt;
+            })
+            return res;
         }
     }
 

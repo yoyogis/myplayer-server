@@ -14,6 +14,7 @@ const readFile = util.promisify(fs.readFile);
 
 module.exports = {
     async scanFiles(dir) {
+        console.log("scanFiles")
         let absolutPath = path.resolve(dir);
         let result = [];
         const files = await readdir(absolutPath);
@@ -33,11 +34,16 @@ module.exports = {
             } else {
                 let fileType = this.isFileSupported(file);
                 if (fileType) {
+
+                    const images = await this.getRelatedImages(file);
+                    console.log(images);
                     result.push({
                         path: filePath,
+                        dir:absolutPath,
                         md5: await this.cacuMd5(filePath),
                         fileName: file,
-                        fileType:fileType
+                        fileType:fileType,
+                        images:images
                     })
                 }
             }
@@ -76,5 +82,7 @@ module.exports = {
         } else {
             return true;
         }
-    }
+    },
+
+   
 }
